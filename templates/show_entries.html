@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+  {% if session.logged_in %}
+    <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
+      <dl>
+        <dt>Name:
+        <dd><input type="text" size="30" name="name">
+        <dt>Appointment date:
+        <dd><input type = "text" size ="30" name="aptdate">
+        <dt>Batch Number:
+        <dd><input type = "text" size ="30" name="batch">
+        <!--<dd><textarea name="aptdate" rows="1" cols="40"></textarea>-->
+        <dd><input type="submit" value="Share">
+      </dl>
+    </form>
+  {% endif %}
+  <ul class=entries>
+  <li> ID NAME APPOINTMENT DATE BATCH NUMBER 
+  {% for apt in apts %}
+    <!--<li><h2>{{ apt }}-->
+    
+    <li>{{  apt['id'], apt['name'], apt['aptdate'], apt['batch'] }}
+  {% else %}
+    <li><em>Unbelievable.  No appointments here so far</em>
+  {% endfor %}
+  </ul>
+{% endblock %}
+  
+  
