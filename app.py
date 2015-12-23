@@ -39,9 +39,7 @@ def show_entries():
     
     return render_template('show_entries.html', apts=apts)        
       
-@app.route('/search')
-def show_apts():
-    return render_template('search.html')
+
     
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -55,7 +53,39 @@ def add_entry():
     g.db.commit()
     flash('New entry was successfully posted '+ decoded_name + ' ' + decoded_aptdate)
     return redirect(url_for('show_entries'))        
-        
+
+@app.route('/search')
+def show_apts():
+    return render_template('search.html')    
+    
+@app.route('/show', methods=['POST'])
+def show_entry():
+    searched = []
+    searched.append(str(request.form['name']))
+ 
+    cur = g.db.execute('select id, name, aptdate, batch from apts where name in (?)', (searched))
+    
+    found = [dict(id=(row[0]), name=str(row[1]), aptdate=str(row[2]), batch=row[3]) for row in cur.fetchall()]
+    
+    
+    """
+    display_found = []
+    
+    for i in found:
+        if request.form['name'] or request.form['aptdate'] or request.form['batch'] in found:
+            display_found.append(i)
+    """
+    return render_template('search.html', apts=found) #display_found
+    
+    
+    decoded_name = str(request.form['name'])
+    decoded_aptdate = str(request.form['aptdate'])
+    
+    g.db.execute('insert into apts (name, aptdate, batch) values (?, ?, ?)',
+                 [request.form['name'], request.form['aptdate'], request.form['batch']])
+    g.db.commit()
+    flash('New entry was successfully posted '+ decoded_name + ' ' + decoded_aptdate)
+    return redirect(url_for('show_entries'))     
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

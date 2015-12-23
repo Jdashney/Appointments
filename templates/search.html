@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 
-    <form action="{{ url_for('add_entry') }}" method="post" class="add-entry">
+    <form action="{{ url_for('show_entry') }}" method="post" class="show-entry">
       <dl>
         <dt>Name:
         <dd><input type="text" size="30" name="name">
@@ -17,11 +17,9 @@
   <ul class=entries>
   <li> ID NAME APPOINTMENT DATE BATCH NUMBER 
   {% for apt in apts %}
-    <!--<li><h2>{{ apt }}-->
-    
     <li>{{  apt['id'], apt['name'], apt['aptdate'], apt['batch'] }}
   {% else %}
-    <li><em>Unbelievable.  No appointments here so far</em>
+    <li><em>No results found</em>
   {% endfor %}
   </ul>
 {% endblock %}
