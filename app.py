@@ -2,18 +2,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
 from contextlib import closing
-
-#Moved to config file - TO BE DEL
-'''
-# configuration
-DATABASE = './wine.db'
-DEBUG = True
-SECRET_KEY = 'development key'
-USERNAME = 'admin'
-PASSWORD = 'default'
-'''
-
-     
+    
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
 
@@ -49,11 +38,15 @@ def show_entries():
     '''
     
     return render_template('show_entries.html', apts=apts)        
-        
+      
+@app.route('/search')
+def show_apts():
+    return render_template('search.html')
+    
 @app.route('/add', methods=['POST'])
 def add_entry():
-    #if not session.get('logged_in'):
-    #    abort(401)
+    if not session.get('logged_in'):
+        abort(401)
     decoded_name = str(request.form['name'])
     decoded_aptdate = str(request.form['aptdate'])
     
@@ -85,22 +78,6 @@ def logout():
     return redirect(url_for('show_entries'))
 
 
-"""
-def find_record(name_batch):
-
-    if int(name_batch) == name_batch:
-        batch_no = name_batch
-        name  = "Blank"  
-    elif int(name_batch) != name_batch:
-        batch_no = "Blank"
-        name = name_batch
-        
-    print ("the name is " + str(name))
-    print ("the batch number is " + str(batch_no))
-   
-#find_record(51600)
-#find_record("justin")     
-
 def create_appointment():   
     pass
 
@@ -109,8 +86,8 @@ def delete_appointment():
 
 def edit_appointment():
     pass
-"""
 
+    
 if __name__ == '__main__':
     app.run()
  
