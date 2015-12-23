@@ -60,10 +60,10 @@ def show_apts():
     
 @app.route('/show', methods=['POST'])
 def show_entry():
-    searched = []
-    searched.append(str(request.form['name']))
- 
-    cur = g.db.execute('select id, name, aptdate, batch from apts where name in (?)', (searched))
+    searched_name = str(request.form['name'])
+    searched_batch = str(request.form['batch'])
+    
+    cur = g.db.execute('select id, name, aptdate, batch from apts where name in (?) and batch in (?)', (searched_name, searched_batch))
     
     found = [dict(id=(row[0]), name=str(row[1]), aptdate=str(row[2]), batch=row[3]) for row in cur.fetchall()]
     
