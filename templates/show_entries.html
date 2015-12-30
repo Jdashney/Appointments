@@ -25,12 +25,30 @@
       </dl>
     </form>
   {% endif %}
-  <ul class=entries>
-  <li> ID NAME APPOINTMENT DATE BATCH NUMBER 
+  <!--ul class=table-->
+  <table>
+  
+  <tr> 
+      <td>ID</td> 
+      <td>Name</td> 
+      <td>Appointment Date</td> 
+      <td>Batch Number</td>
+      <td>Change</td>
+      <td>Delete</td>
+           
+  </tr>
+  
   {% for apt in apts %}
-    <!--<li><h2>{{ apt }}-->
-    
-    <li>{{  apt['id'], apt['name'], apt['aptdate'], apt['batch'] }}
+    <tr>    
+        <td>{{  apt['id']  }}</td>
+        <td>{{  apt['name']  }}</td>
+        <td>{{  apt['aptdate']  }}</td>
+        <td>{{  apt['batch']  }}</td>
+        <td><input type="reset" value = "Change"></td>
+        <td><input type="reset" value = "Delete"></td>          
+    </tr>    
+
+       <!--li>{{  apt['id'], apt['name'], apt['aptdate'], apt['batch'] }} <-->
   {% else %}
     <li><em>Unbelievable.  No appointments here so far</em>
   {% endfor %}
