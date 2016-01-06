@@ -42,7 +42,16 @@ def add_entry():
                  [request.form['name'], request.form['aptdate'], request.form['batch']])
     g.db.commit()
     flash('New entry was successfully posted '+ decoded_name + ' ' + decoded_aptdate)
-    return redirect(url_for('show_entries'))        
+    return redirect(url_for('show_entries')) 
+
+@app.route('/delete', methods=['POST'])
+def delete_entry():
+    g.db.execute('delete from apts where id = (?)', [request.form['deleteid']])
+    g.db.commit()
+    flash('Entry was successfully deleted')
+    return redirect(url_for('show_entries'))
+     
+    
 
 @app.route('/search')
 def show_apts():
@@ -77,17 +86,7 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
-
-def create_appointment():   
-    pass
-
-def delete_appointment():
-    pass
-
-def edit_appointment():
-    pass
-
-    
+   
 if __name__ == '__main__':
     app.run()
  

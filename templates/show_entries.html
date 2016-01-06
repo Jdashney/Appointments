@@ -24,6 +24,12 @@
         <input type="reset" value = "Clear">
       </dl>
     </form>
+    <form action="{{ url_for('delete_entry') }}" method="post" class="add-entry">
+      <dl>  
+        <dt>ID of appointment to be deleted:
+        <dt><input type="text" size ="30" name="deleteid">
+        <dd><input type="submit" value="Delete"size ="30" name="delete">
+      </dl>
   {% endif %}
   <!--ul class=table-->
   <table>
@@ -34,7 +40,7 @@
       <td>Appointment Date</td> 
       <td>Batch Number</td>
       <td>Change</td>
-      <td>Delete</td>
+      
            
   </tr>
   
@@ -45,10 +51,9 @@
         <td>{{  apt['aptdate']  }}</td>
         <td>{{  apt['batch']  }}</td>
         <td><input type="reset" value = "Change"></td>
-        <td><input type="reset" value = "Delete"></td>          
+                 
     </tr>    
 
-       <!--li>{{  apt['id'], apt['name'], apt['aptdate'], apt['batch'] }} <-->
   {% else %}
     <li><em>Unbelievable.  No appointments here so far</em>
   {% endfor %}
