@@ -50,8 +50,7 @@ def delete_entry():
     g.db.commit()
     flash('Entry was successfully deleted')
     return redirect(url_for('show_entries'))
-     
-    
+
 
 @app.route('/search')
 def show_apts():
